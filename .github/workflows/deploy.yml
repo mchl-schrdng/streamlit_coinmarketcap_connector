@@ -1,55 +1,57 @@
+# This workflow runs whenever there's a push to the main branch. 
+# It deploys your app to the production environment on Google Cloud Run.
 name: Deploy to Production
 
-on:
-  push:
-    branches:
-      - main  # Trigger only when there's a push to the main branch
+#on:
+#  push:
+#    branches:
+#      - main  # Workflow will trigger only when there's a push to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # This specifies the type of runner that the job will run on
 
     steps:
-    - name: Checkout code
+    - name: Checkout code  # This step checks out a copy of your repository
       uses: actions/checkout@v2
 
-    - name: Set up Cloud SDK
+    - name: Set up Cloud SDK  # This step sets up the Google Cloud SDK 
       uses: google-github-actions/setup-gcloud@v0
       with:
-        project_id: ${{ secrets.PROJECT_ID }}
-        service_account_key: ${{ secrets.GCR_JSON_KEY }}
-        export_default_credentials: true
+        project_id: ${{ secrets.PROJECT_ID }}  # Insert your Google Cloud project ID here
+        service_account_key: ${{ secrets.GCR_JSON_KEY }}  # Insert your service account key here
+        export_default_credentials: true  # This will use these credentials for all gcloud commands
 
-    - name: Set up Docker Buildx
+    - name: Set up Docker Buildx  # Sets up Docker Buildx (a CLI plugin that extends the docker command with the features provided by Moby BuildKit builder toolkit)
       uses: docker/setup-buildx-action@v1
 
-    - name: Login to Google Container Registry
+    - name: Login to Google Container Registry  # Log in to Google Container Registry, where your Docker images will be stored
       uses: docker/login-action@v1 
       with:
         registry: gcr.io
         username: _json_key
         password: ${{ secrets.GCR_JSON_KEY }}
 
-    - name: Build and push Docker image
+    - name: Build and push Docker image  # Build the Docker image and push it to Google Container Registry
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest
+        tags: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest  # Tag the image with 'latest'
 
-    - name: Deploy to Cloud Run
+    - name: Deploy to Cloud Run  # Deploy the 'latest' image to Cloud Run
       uses: google-github-actions/deploy-cloudrun@main
       with:
         service: streamlit-app
-        image: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest
+        image: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest  # Use the 'latest' image for deployment
         credentials: ${{ secrets.GCR_JSON_KEY }}
-        region: us-central1
-        allow_unauthenticated: true
+        region: us-central1 # Use the appropriate region for your needs
+        allow_unauthenticated: true  # Allow unauthenticated (public) access to the deployed app
 
-    - name: Notify of Deployment
+    - name: Notify of Deployment  # Add a comment to the commit in the main branch with the URL of the deployed app
       uses: actions/github-script@v5
       with:
-        github-token: ${{ secrets.GH_PAT }}
+        github-token: ${{ secrets.GH_PAT }}  # Use the personal access token to overcome restrictions of GITHUB_TOKEN
         script: |
           const commit_sha = context.sha;
           const url = `${{ steps.deploy.outputs.url }}`;
@@ -57,5 +59,5 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             commit_sha: commit_sha,
-            body: `🚀 App deployed to production!\n\nAccess it here: ${url}`
+            body: `🚀 Your application has been deployed to production!\n\nYou can access it here: ${url}`
           });
