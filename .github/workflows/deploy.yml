@@ -1,4 +1,3 @@
-# This workflow deploys your app to Google Cloud Run when there's a push to the main branch.
 name: Deploy to Production
 
 on:
@@ -39,7 +38,7 @@ jobs:
         tags: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest
 
     - name: Deploy to Cloud Run
-      uses: 'google-github-actions/deploy-cloudrun@v1'
+      uses: google-github-actions/deploy-cloudrun@main
       with:
         service: streamlit-app
         image: gcr.io/${{ secrets.PROJECT_ID }}/streamlit-app:latest
