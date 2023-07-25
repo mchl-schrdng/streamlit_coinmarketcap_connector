@@ -1,20 +1,20 @@
-# Use an official lightweight Python 3.9 image
-FROM python:3.9-slim
+# Use the same Python image as in the working example
+FROM python:3.8-slim-buster
 
-# Set the working directory
+# Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Copy the requirements.txt file into the container
 COPY requirements.txt ./requirements.txt
 
-# Install Python dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the local code to the container
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Set the command to run your Streamlit app
+# Run the command to start the server when the container launches
 CMD streamlit run app.py --server.port 8080 --browser.serverAddress 0.0.0.0 --browser.gatherUsageStats False
