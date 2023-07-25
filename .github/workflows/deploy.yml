@@ -2,10 +2,10 @@
 # It deploys your app to the production environment on Google Cloud Run.
 name: Deploy to Production
 
-#on:
-#  push:
-#    branches:
-#      - main  # Workflow will trigger only when there's a push to the main branch
+on:
+  push:
+    branches:
+      - main  # Workflow will trigger only when there's a push to the main branch
 
 jobs:
   deploy:
