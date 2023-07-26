@@ -12,7 +12,7 @@ class CoinMarketCapConnection(ExperimentalBaseConnection):
 
     def _connect(self, **kwargs):
         # Fetch the API key from the environment
-        self.api_key = os.environ.get("COINMARKETCAP_API_KEY")
+        self.api_key = st.secrets["coinmarketcap"]["api_key"]
         if not self.api_key:
             raise ValueError("CoinMarketCap API Key not found in environment!")
 
