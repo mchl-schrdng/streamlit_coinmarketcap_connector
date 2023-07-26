@@ -1,8 +1,8 @@
 import streamlit as st
 from src.coinmarketcap_connector import CoinMarketCapConnection
 
-# Create an instance of the connection
-cmc_conn = CoinMarketCapConnection()
+# Provide a connection name when creating an instance of the connection
+cmc_conn = CoinMarketCapConnection(connection_name="cmc_connection")
 
 def main():
     st.title("CoinMarketCap Explorer")
