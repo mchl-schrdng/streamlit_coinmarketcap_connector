@@ -6,6 +6,10 @@ import time
 class CoinMarketCapConnection(ExperimentalBaseConnection):
     BASE_URL = "https://pro-api.coinmarketcap.com/v1/"
 
+    def __init__(self, connection_name):
+        super().__init__(connection_name)
+        self._connect()
+
     def _connect(self, **kwargs):
         # Fetch the API key from the environment
         self.api_key = os.environ.get("COINMARKETCAP_API_KEY")
