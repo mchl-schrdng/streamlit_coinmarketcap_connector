@@ -6,6 +6,13 @@ import polars as pl
 cmc_conn = CoinMarketCapConnection(connection_name="cmc_connection")
 
 def main():
+     # Create two columns for the logos
+    col1, col2 = st.sidebar.columns(2)
+    
+    # Display the logos in the respective columns
+    col1.image("streamlit-logo.png", width=100)
+    col2.image("cmc-logo.png", width=100)
+    
     st.title("CoinMarketCap Explorer")
     
     # Sidebar with functionalities
