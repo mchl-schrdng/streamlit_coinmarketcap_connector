@@ -57,7 +57,3 @@ class CoinMarketCapConnection(ExperimentalBaseConnection):
             "time_end": end_date
         }
         return self._request("cryptocurrency/quotes/historical", params=params)
-
-    def search_cryptocurrencies(self, keyword):
-        params = {"keyword": keyword}
-        return self._request("cryptocurrency/search", params=params)
