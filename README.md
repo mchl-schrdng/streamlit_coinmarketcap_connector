@@ -1,5 +1,5 @@
 # Streamlit + CoinMarketCap Integration
-<img width="2673" alt="image" src="https://github.com/mchl-schrdng/streamlit_coinmarketcap_connector/assets/73759636/e3cacf1d-759b-4522-bd05-46d899c6c02c" width="500"/>
+<img width="2673" alt="image" src="https://github.com/mchl-schrdng/streamlit_coinmarketcap_connector/assets/73759636/e3cacf1d-759b-4522-bd05-46d899c6c02c" width="500"/>  
 
 <img src="./streamlit-logo.png" alt="Streamlit Logo" width="100"/> <img src="./cmc-logo.png" alt="CMC Logo" width="100"/>
 
