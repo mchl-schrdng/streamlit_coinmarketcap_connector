@@ -1,10 +1,10 @@
-from streamlit.connections import ExperimentalBaseConnection
+from streamlit.connections import BaseConnection
 import streamlit as st
 import requests
 import os
 import time
 
-class CoinMarketCapConnection(ExperimentalBaseConnection):
+class CoinMarketCapConnection(BaseConnection):
     BASE_URL = "https://pro-api.coinmarketcap.com/v1/"
 
     def __init__(self, connection_name):
